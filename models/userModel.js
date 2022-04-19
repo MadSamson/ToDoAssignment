@@ -17,7 +17,6 @@ const User = mongoose.model('User', userSchema)
 const createUser = async(userdata)=>{
     const user = new User(userdata)
     await user.save()
-    return user
 }
 
 module.exports = {
