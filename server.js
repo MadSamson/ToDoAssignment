@@ -1,8 +1,11 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken');
 const register = require('./controllers/register')
 const login = require('./controllers/login')
+const newToDo = require('./controllers/todo')
+const listToDo = require('./controllers/todo')
 const app = express()
 const port = 4000
 app.use(cors())
@@ -22,6 +25,8 @@ app.use((req, _res, next) => {
 
 app.use('/', register)
 app.use('/', login)
+app.use('/todo', newToDo)
+app.use('/todo', listToDo)
 
 mongoose.connect('mongodb://localhost/todo-assignment')
 app.listen(port,()=>{
