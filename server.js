@@ -6,6 +6,8 @@ const register = require('./controllers/register')
 const login = require('./controllers/login')
 const newToDo = require('./controllers/todo')
 const listToDo = require('./controllers/todo')
+const completeAToDo = require('./controllers/todo')
+const complitedList = require('./controllers/todo')
 const app = express()
 const port = 4000
 app.use(cors())
@@ -27,6 +29,8 @@ app.use('/', register)
 app.use('/', login)
 app.use('/todo', newToDo)
 app.use('/todo', listToDo)
+app.use('/todo', complitedList)
+app.use('/todo', completeAToDo)
 
 mongoose.connect('mongodb://localhost/todo-assignment')
 app.listen(port,()=>{

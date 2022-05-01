@@ -16,12 +16,30 @@ const createTodoModel = async(todoinput)=>{
 }
 
 const listToDos = async (id) => {
-    const data = await ToDo.find({ author: mongoose.Types.ObjectId(id) }).sort({ createdAt: -1 }).exec();
+    const data = await ToDo.find({ author: mongoose.Types.ObjectId(id), completed:false}).sort({ createdAt: -1 }).exec();
     return data;
 };
+
+const completedList = async(id)=>{
+    const data = await ToDo.find({ author: mongoose.Types.ObjectId(id), completed:true}).sort({ createdAt: -1 }).exec();
+    return data;
+}
+
+const completeAToDo = async(id) => {
+    const todo = await ToDo.findOne({_id: mongoose.Types.ObjectId(id)})
+    let updatedtodo
+    if (todo.completed===true){
+        updatedtodo = ToDo.updateOne({_id: mongoose.Types.ObjectId(id)}, {completed: false})
+    } else {
+        updatedtodo = ToDo.updateOne({_id: mongoose.Types.ObjectId(id)}, {completed: true})
+    }
+    return updatedtodo
+}
 
 
 module.exports= {
     createTodoModel,
-    listToDos
+    listToDos,
+    completedList,
+    completeAToDo
 }
