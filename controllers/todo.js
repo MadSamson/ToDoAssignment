@@ -13,19 +13,19 @@ router.post(('/create'), async(req, res) => {
     res.json(newToDo)
 })
 
-router.post('/listToDo', async(req,res)=>{
+router.get('/listToDo', async(req,res)=>{
     const id = req.user.userId
     const listOfToDos = await listToDos(id);
     res.json(listOfToDos);
 })
 
-router.post('/complitedList', async(req,res)=>{
+router.get('/complitedList', async(req,res)=>{
     const id = req.user.userId
     const listOfToDos = await completedList(id);
     res.json(listOfToDos);
 })
 
-router.post('/:id', async(req, res)=>{
+router.put('/:id', async(req, res)=>{
     const id = req.params.id
     const todo = await completeAToDo(id)
     res.json(todo)
