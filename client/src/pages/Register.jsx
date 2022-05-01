@@ -8,23 +8,21 @@ export default function StartPage() {
 
     const navigate = useNavigate()
 
-    function handleOnSubmit(event) {
-        event.preventDefault()
-        const payload = { username, password }
-        fetch('http://localhost:4000/register', {
+    function handleOnSubmit(e){
+        e.preventDefault()
+        const registerPath = 'http://localhost:4000/register'
+        const payload = {username,password}
+        
+        fetch(registerPath, {
             method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)
         })
         .then(res => res.json())
-        .then(data => {
-            const token = data.token
-            localStorage.setItem("todoapp", token)
-        })
-        navigate("/login")
+        .then(data => console.log(data))
+        navigate('/login')    
     }
+
     return (
     <div>
         <h1>Register</h1>
