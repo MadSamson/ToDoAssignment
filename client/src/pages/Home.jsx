@@ -20,9 +20,7 @@ export default function Home() {
         fetch(url, {
           method: "GET",
           headers: headers,
-        }).then(res => res.json())
-        .then(data => console.log(data))
-        
+        })
     }
 
   return (
