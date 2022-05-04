@@ -9,7 +9,8 @@ const {
 
 router.post(('/create'), async(req, res) => {
     const todoinput = req.body
-    const newToDo = await createTodoModel(todoinput)
+    const userId = req.user.userId
+    const newToDo = await createTodoModel(userId, todoinput)
     res.json(newToDo)
 })
 
