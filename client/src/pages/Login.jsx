@@ -19,7 +19,10 @@ export default function StartPage() {
             body: JSON.stringify(payload)
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data);
+            localStorage.setItem('ToDoAssignment', data.token)
+        })
         navigate('/home')    
     }
 
