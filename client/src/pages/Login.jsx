@@ -20,7 +20,7 @@ export default function StartPage() {
         })
         .then(res => res.json())
         .then(data => console.log(data))
-        navigate('/')    
+        navigate('/home')    
     }
 
     return (
