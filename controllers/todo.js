@@ -9,11 +9,12 @@ const {
 
 router.post(('/create'), async(req, res) => {
     const todoinput = req.body
-    const newToDo = await createTodoModel(todoinput)
+    const userId = req.user.userId
+    const newToDo = await createTodoModel(userId, todoinput)
     res.json(newToDo)
 })
 
-router.post('/listToDo', async(req,res)=>{
+router.get('/listToDo', async(req,res)=>{
     const id = req.user.userId
     const listOfToDos = await listToDos(id);
     res.json(listOfToDos);
