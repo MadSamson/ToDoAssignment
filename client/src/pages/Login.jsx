@@ -22,8 +22,8 @@ export default function StartPage() {
         .then(data => {
             console.log(data);
             localStorage.setItem('ToDoAssignment', data.token)
+            navigate('/home') 
         })
-        navigate('/home')    
     }
 
     return (
