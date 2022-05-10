@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
     const [toDosList, setToDosList] = useState('')
+    const [completedToDosList, setCompletedToDosList] = useState('')
     const [toDo, setToDo] = useState('')
 
     const navigate = useNavigate()
 
     useEffect(()=>{
         getUndoneToDo()
+        getCompeletedToDo()
     },[])
 
     function getUndoneToDo() {
@@ -27,6 +29,22 @@ export default function Home() {
         .then(res=>res.json())
         .then(data => {
           setToDosList(data)
+        })
+    }
+    function getCompeletedToDo() {
+      const token = localStorage.getItem('ToDoAssignment')
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+        const url = 'http://localhost:4000/todo/complitedList'
+        fetch(url, {
+          method: 'GET',
+          headers: headers,
+        })
+        .then(res=>res.json())
+        .then(data => {
+          setCompletedToDosList(data)
         })
     }
 
@@ -50,6 +68,46 @@ export default function Home() {
         getUndoneToDo()
       })
     }
+
+    function handleOnClick_finished(id) {
+      const payload = { 'completed': true}
+      const token = localStorage.getItem('ToDoAssignment')
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }
+      const url = `http://localhost:4000/todo/${id}`
+      fetch(url, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(payload)
+      }).then(res => res.json())
+      .then( data => {
+        console.log(data)
+        getUndoneToDo()
+        getCompeletedToDo()
+      })
+    }
+
+    function handleOnClick_return(id) {
+      const payload = { 'completed': false}
+      const token = localStorage.getItem('ToDoAssignment')
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }
+      const url = `http://localhost:4000/todo/${id}`
+      fetch(url, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(payload)
+      }).then(res => res.json())
+      .then( data => {
+        console.log(data)
+        getUndoneToDo()
+        getCompeletedToDo()
+      })
+    }
     
     function logout() {
       localStorage.removeItem('ToDoAssignment')
@@ -64,10 +122,23 @@ export default function Home() {
         <input type='submit' value='Create'/>
       </form>
 
+      <h4>ToDos</h4>
       {toDosList && toDosList.map((item) => {
-        return (
+        if (item.completed === false) return (
           <ul key={item._id}>
             <li>{item.description}</li>
+            <button onClick={ e => handleOnClick_finished(item._id)}>Finished</button>
+          </ul>
+        )
+      })}
+      <hr />
+
+      <h4>completed</h4>
+      {completedToDosList && completedToDosList.map((item) => {
+        if (item.completed === true) return (
+          <ul key={item._id}>
+            <li>{item.description}</li>
+            <button onClick={ e => handleOnClick_return(item._id)}>Return to ToDos</button>
           </ul>
         )
       })}
