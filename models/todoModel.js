@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 
 const todoSchema = new mongoose.Schema ({
-    by: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    by: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
     description: {type: String, required: true},
     tag: [{ type: String }],
     completed: {type: Boolean, default: false},
+    LongDescription: {type: String, maxlength: 1000},
+    files: {type: Array, default:[]},
 },
 { timestamps: true })
 
@@ -42,10 +44,10 @@ const toDoDetails = async(id) => {
     return todo
 }
 
-const editToDo = async (id, description) => {
+const editToDo = async (id, description, LongDescription) => {
     const todo = await ToDo.findOneAndUpdate(
         {_id: mongoose.Types.ObjectId(id)},
-        {description: description},
+        {description: description, LongDescription: LongDescription},
         {new: true}
     )
     return todo

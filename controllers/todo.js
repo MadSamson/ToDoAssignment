@@ -42,8 +42,9 @@ router.get('/:id', async (req, res)=>{
 
 router.put('/:id/detail', async (req, res)=>{
     const id = req.params.id
-    const {description} = req.body
-    const todo = await editToDo(id, description)
+    const {description, LongDescription} = req.body
+    console.log(req.body);
+    const todo = await editToDo(id, description, LongDescription)
     res.json(todo)
 })
 

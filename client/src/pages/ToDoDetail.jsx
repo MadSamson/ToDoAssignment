@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 export default function ToDoDetail() {
     const [toDoDetail, setToDoDetail] = useState('')
     const [description, setDescription] = useState('')
-    console.log(description);
+    const [longDescription, setLongDescription] = useState('')
     let {toDoId}  = useParams()
     useEffect(()=>{
         getToDoDetail()
@@ -24,7 +24,7 @@ export default function ToDoDetail() {
         .then(res=>res.json())
         .then(data => {
           console.log(data)
-          setToDoDetail(data)
+          setToDoDetail()
         })
     }
 
@@ -36,7 +36,7 @@ export default function ToDoDetail() {
             'Authorization': `Bearer ${token}`,
         }
         const url = `http://localhost:4000/todo/${toDoId}/detail`
-        const payload = { 'description': description }
+        const payload = { 'description': description, 'LongDescription':longDescription}
         fetch(url,{
             method:'PUT',
             headers: headers,
@@ -53,14 +53,18 @@ export default function ToDoDetail() {
         <h4>ToDoDetail</h4>
         {toDoDetail && (
             <div>
-                Description: {toDoDetail.description}
+                Title: {toDoDetail.description}
+                <br />
+                Description: {toDoDetail.LongDescription}
                 <br />
                 Created at: {toDoDetail.createdAt}
             </div>
         )}
         <hr />
         <form onSubmit={handleOnSubmit}>
-            A new description: <input type='text' value={description} onChange={e => setDescription(e.target.value)}/>
+            title: <input type='text' value={description} onChange={e => setDescription(e.target.value)}/>
+            <br />
+            Description: <input type='text' value={longDescription} onChange={e => setLongDescription(e.target.value)}/>
             <input type="submit" value='submit' />
         </form>
     </div>
