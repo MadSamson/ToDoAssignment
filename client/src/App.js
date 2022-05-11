@@ -3,6 +3,7 @@ import Navbar from './components/Navbar.jsx'
 import Login from './pages/Login.jsx'
 import Register from './pages/Register'
 import Home from './pages/Home'
+import ToDoDetail from './pages/ToDoDetail.jsx'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/home" element={<Home/>}/>
+        <Route path="/todo/:toDoId" element={<ToDoDetail />} />
       </Routes>
     </div>
   );

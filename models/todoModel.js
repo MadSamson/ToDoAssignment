@@ -37,10 +37,25 @@ const completeAToDo = async(id) => {
     return updatedtodo
 }
 
+const toDoDetails = async(id) => {
+    const todo = await ToDo.findOne({_id: mongoose.Types.ObjectId(id)})
+    return todo
+}
+
+const editToDo = async (id, description) => {
+    const todo = await ToDo.findOneAndUpdate(
+        {_id: mongoose.Types.ObjectId(id)},
+        {description: description},
+        {new: true}
+    )
+    return todo
+}
 
 module.exports= {
     createTodoModel,
     listToDos,
     completedList,
-    completeAToDo
+    completeAToDo,
+    toDoDetails,
+    editToDo
 }

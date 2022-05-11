@@ -1,6 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 export default function Home() {
@@ -83,7 +84,6 @@ export default function Home() {
         body: JSON.stringify(payload)
       }).then(res => res.json())
       .then( data => {
-        console.log(data)
         getUndoneToDo()
         getCompeletedToDo()
       })
@@ -103,7 +103,6 @@ export default function Home() {
         body: JSON.stringify(payload)
       }).then(res => res.json())
       .then( data => {
-        console.log(data)
         getUndoneToDo()
         getCompeletedToDo()
       })
@@ -126,8 +125,16 @@ export default function Home() {
       {toDosList && toDosList.map((item) => {
         if (item.completed === false) return (
           <ul key={item._id}>
-            <li>{item.description}</li>
-            <button onClick={ e => handleOnClick_finished(item._id)}>Finished</button>
+            <li>
+              <Link to={`/todo/${item._id}`}>
+                {item.description}
+                <br />
+                {item.createdAt}
+              </Link>
+              <br />
+              <button onClick={ e => handleOnClick_finished(item._id)}>Finished</button>
+            </li>
+            
           </ul>
         )
       })}
@@ -137,8 +144,14 @@ export default function Home() {
       {completedToDosList && completedToDosList.map((item) => {
         if (item.completed === true) return (
           <ul key={item._id}>
-            <li>{item.description}</li>
-            <button onClick={ e => handleOnClick_return(item._id)}>Return to ToDos</button>
+            <li>
+              {item.description}
+              <br />
+              {item.createdAt}
+              <br />
+              <button onClick={ e => handleOnClick_return(item._id)}>Return to ToDos</button>
+            </li>
+            
           </ul>
         )
       })}

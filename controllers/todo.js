@@ -4,7 +4,9 @@ const {
     createTodoModel,
     listToDos,
     completedList,
-    completeAToDo
+    completeAToDo,
+    toDoDetails,
+    editToDo
 } = require('../models/todoModel')
 
 router.post(('/create'), async(req, res) => {
@@ -29,6 +31,19 @@ router.get('/complitedList', async(req,res)=>{
 router.put('/:id', async(req, res)=>{
     const id = req.params.id
     const todo = await completeAToDo(id)
+    res.json(todo)
+})
+
+router.get('/:id', async (req, res)=>{
+    const id = req.params.id
+    const todo = await toDoDetails(id)
+    res.json(todo)
+})
+
+router.put('/:id/detail', async (req, res)=>{
+    const id = req.params.id
+    const {description} = req.body
+    const todo = await editToDo(id, description)
     res.json(todo)
 })
 
