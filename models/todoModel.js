@@ -59,5 +59,6 @@ module.exports= {
     completedList,
     completeAToDo,
     toDoDetails,
-    editToDo
+    editToDo,
+    ToDo: ToDo
 }
