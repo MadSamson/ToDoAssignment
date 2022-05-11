@@ -20,7 +20,7 @@ export default function Home() {
         const token = localStorage.getItem('ToDoAssignment')
         const headers = {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
         }
         const url = 'http://localhost:4000/todo/listToDo'
         fetch(url, {
@@ -36,7 +36,7 @@ export default function Home() {
       const token = localStorage.getItem('ToDoAssignment')
         const headers = {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
         }
         const url = 'http://localhost:4000/todo/complitedList'
         fetch(url, {
@@ -55,7 +55,7 @@ export default function Home() {
       const token = localStorage.getItem('ToDoAssignment')
       const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       }
       const url = 'http://localhost:4000/todo/create'
 
@@ -75,7 +75,7 @@ export default function Home() {
       const token = localStorage.getItem('ToDoAssignment')
       const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       }
       const url = `http://localhost:4000/todo/${id}`
       fetch(url, {
@@ -94,7 +94,7 @@ export default function Home() {
       const token = localStorage.getItem('ToDoAssignment')
       const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`,
       }
       const url = `http://localhost:4000/todo/${id}`
       fetch(url, {

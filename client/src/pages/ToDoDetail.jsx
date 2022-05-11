@@ -71,6 +71,22 @@ export default function ToDoDetail() {
         })
     }
 
+    function handleOnClick_removeFiles(id) {
+        const url = `http://localhost:4000/delete/${toDoId}`
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }
+        fetch(url, {
+            method: 'PUT',
+            headers: headers,
+        }).then(res => res.text())
+        .then(data => {
+            console.log(data)
+            getToDoDetail()
+        })
+    }
+
   return (
     <div>
         <h4>ToDoDetail</h4>
@@ -91,6 +107,8 @@ export default function ToDoDetail() {
                         )
                     })
                 }
+                <br />
+                <button onClick={e => handleOnClick_removeFiles(toDoDetail._id)}>Remove</button>
             </div>
         )}
         <hr />
@@ -100,8 +118,9 @@ export default function ToDoDetail() {
             Description: <input type='text' value={longDescription} onChange={e => setLongDescription(e.target.value)}/>
             <input type="submit" value='submit' />
         </form>
+        <br />
         <form onSubmit={handleOnSubmitFiles}>
-            <input type="file" name="file" onChange={e=> setFiles(e.target.files)} multiple/>
+            <input type="file" name="file" onChange={e=> setFiles(e.target.files)} multiple required/>
             <input type="submit" value="upload" />
         </form>
     </div>
