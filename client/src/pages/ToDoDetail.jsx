@@ -5,13 +5,14 @@ export default function ToDoDetail() {
     const [toDoDetail, setToDoDetail] = useState('')
     const [description, setDescription] = useState('')
     const [longDescription, setLongDescription] = useState('')
+    const [files, setFiles] = useState(null)
     let {toDoId}  = useParams()
     useEffect(()=>{
         getToDoDetail()
     }, [])
+    const token = localStorage.getItem('ToDoAssignment')
 
     function getToDoDetail() {
-        const token = localStorage.getItem('ToDoAssignment')
         const headers = {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -24,13 +25,12 @@ export default function ToDoDetail() {
         .then(res=>res.json())
         .then(data => {
           console.log(data)
-          setToDoDetail()
+          setToDoDetail(data)
         })
     }
 
     function handleOnSubmit(e) {
         e.preventDefault()
-        const token = localStorage.getItem('ToDoAssignment')
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -48,6 +48,29 @@ export default function ToDoDetail() {
         })
     }
 
+    function handleOnSubmitFiles(e) {
+        e.preventDefault()
+        const url = `http://localhost:4000/uploads/${toDoId}`
+        console.log(url);
+        const form = new FormData()
+        
+        for (let i = 0; i < files.length; i++) {
+            form.append("files", files[i]);
+        }
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: form,
+        }).then(res => res.text())
+        .then(data =>{
+            console.log(data)
+            getToDoDetail()
+        })
+    }
+
   return (
     <div>
         <h4>ToDoDetail</h4>
@@ -58,6 +81,16 @@ export default function ToDoDetail() {
                 Description: {toDoDetail.LongDescription}
                 <br />
                 Created at: {toDoDetail.createdAt}
+                <br />
+                Attachment: {
+                    toDoDetail.files && toDoDetail.files.map((item, i)=>{
+                        return(
+                            <ul key={i}>
+                                <li>{item.originalname}</li>
+                            </ul>
+                        )
+                    })
+                }
             </div>
         )}
         <hr />
@@ -66,6 +99,10 @@ export default function ToDoDetail() {
             <br />
             Description: <input type='text' value={longDescription} onChange={e => setLongDescription(e.target.value)}/>
             <input type="submit" value='submit' />
+        </form>
+        <form onSubmit={handleOnSubmitFiles}>
+            <input type="file" name="file" onChange={e=> setFiles(e.target.files)} multiple/>
+            <input type="submit" value="upload" />
         </form>
     </div>
   )
