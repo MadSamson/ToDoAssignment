@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function StartPage() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
 
     const navigate = useNavigate()
 
@@ -19,8 +20,16 @@ export default function StartPage() {
             body: JSON.stringify(payload)
         })
         .then(res => res.json())
-        .then(data => console.log(data))
-        navigate('/login')    
+        .then(data => {
+            if (data === 'username already exists') {
+                console.log(data)
+                setMessage(data)
+                navigate('/register')
+            } else (
+                navigate('/login')
+            )
+        })
+        
     }
 
     return (
@@ -34,6 +43,8 @@ export default function StartPage() {
             <input type="password" id='password' value={password} onChange={e => setPassword(e.target.value)} required/>
             <br />
             <input type="submit" value='Create'/>
+            <br />
+            <div>{message}</div>
         </form> 
     </div>
     )

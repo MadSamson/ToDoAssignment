@@ -12,6 +12,7 @@ router.post('/register', async (req,res)=>{
     } else {
         const user = new User({username, password})
         await user.save()
+        res.json('account successfully created')
     }
 })
 
