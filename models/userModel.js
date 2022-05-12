@@ -34,5 +34,6 @@ const userVerification = async (username, password) => {
 
 module.exports = {
     createUser,
-    userVerification
+    userVerification,
+    User: User
 }
