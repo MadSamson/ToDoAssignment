@@ -48,6 +48,15 @@ app.post('/uploads/:todo_id', async(req,res)=>{
   res.send('completed')
 })
 
+app.put('/delete/:todo_id', async(req, res)=>{
+  await ToDo.findOneAndUpdate(
+    {'_id': req.params.todo_id},
+    {$unset:{files:[]}},
+    {new: true}
+  )
+  res.send('removed')
+})
+
 app.use('/', register)
 app.use('/', login)
 app.use('/todo', newToDo)
