@@ -28,10 +28,10 @@ export default function StartPage() {
         <h1>Register</h1>
         <form onSubmit={handleOnSubmit}>
             <label htmlFor="username">Username</label>
-            <input type="text" id='username' value={username} onChange={e => setUsername(e.target.value)}/>
+            <input type="text" id='username' value={username} onChange={e => setUsername(e.target.value)} required/>
             <br />
             <label htmlFor="password">Password</label>
-            <input type="password" id='password' value={password} onChange={e => setPassword(e.target.value)}/>
+            <input type="password" id='password' value={password} onChange={e => setPassword(e.target.value)} required/>
             <br />
             <input type="submit" value='Create'/>
         </form> 
